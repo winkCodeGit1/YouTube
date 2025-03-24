@@ -1,0 +1,23 @@
+{
+  "name": "youtubeparcel",
+  "version": "1.0.0",
+  "description": "Making Full Fledge React Youtube Project",
+  "keywords": [
+    "YouTube"
+  ],
+  "homepage": "https://github.com/winkCodeGit1/YouTube#readme",
+  "bugs": {
+    "url": "https://github.com/winkCodeGit1/YouTube/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winkCodeGit1/YouTube.git"
+  },
+  "license": "ISC",
+  "author": "Suman Saurav Das",
+  "type": "commonjs",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  }
+}
