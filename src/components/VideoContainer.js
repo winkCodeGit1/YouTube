@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { Youtube_API_URL } from "../utils/constants";
 
 const VideoContainer = () => {
-  return (
-    <div>VideoContainer</div>
-  )
-}
+  useEffect(() => {
+    getYouTubeVideos();
+  }, []);
 
-export default VideoContainer
+  const getYouTubeVideos = async () => {
+    const data = await fetch(Youtube_API_URL);
+
+    const json_data = await data.json();
+    console.log(json_data, "-----jsondata");
+  };
+  return <div>VideoContainer</div>;
+};
+
+export default VideoContainer;
