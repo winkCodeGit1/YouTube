@@ -15,10 +15,10 @@ import {
 } from "lucide-react";
 
 export const mainMenus = [
-  { name: "Home", icon: <Home size={20} /> },
-  { name: "Explore", icon: <Compass size={20} /> },
-  { name: "Shorts", icon: <PlayCircle size={20} /> },
-  { name: "Subscriptions", icon: <Video size={20} /> },
+  { name: "Home", icon: <Home size={20} />, path: "/" },
+  { name: "Explore", icon: <Compass size={20} />, path: "/" },
+  { name: "Shorts", icon: <PlayCircle size={20} />, path: "/" },
+  { name: "Subscriptions", icon: <Video size={20} />, path: "/" },
 ];
 
 export const libraryMenus = [
@@ -72,5 +72,5 @@ export const categoryFilters = {
 const REACT_APP_YOUTUBE_KEY = "AIzaSyBsSugrmqOwOHz1kowLyUz3UqY3p4TD-jE";
 
 export const Youtube_API_URL =
-  "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=Ks-_Mh1QhMc%2Cc0KYU2j0TM4%2CeIho2S0ZahI&key=" +
+  "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=" +
   REACT_APP_YOUTUBE_KEY;

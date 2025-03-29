@@ -1,18 +1,21 @@
-import React, { useEffect } from "react";
-import { Youtube_API_URL } from "../utils/constants";
+import React from "react";
+import VideoCard from "./VideoCard";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const VideoContainer = () => {
-  useEffect(() => {
-    getYouTubeVideos();
-  }, []);
+  const videoInfo = useSelector((store) => store.videoSlice.videoList);
+  if (!videoInfo) return null;
 
-  const getYouTubeVideos = async () => {
-    const data = await fetch(Youtube_API_URL);
-
-    const json_data = await data.json();
-    console.log(json_data, "-----jsondata");
-  };
-  return <div>VideoContainer</div>;
+  return (
+    <div className="flex flex-wrap justify-center">
+      {videoInfo?.map((video) => (
+        <Link key={video.id} to={"/watch?v=" + video?.id}>
+          <VideoCard key={video.id} info={video} />
+        </Link>
+      ))}
+    </div>
+  );
 };
 
 export default VideoContainer;

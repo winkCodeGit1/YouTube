@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const navigationSlice = createSlice({
   name: "navigationSlice",
   initialState: {
-    toggleSliceBar: false,
+    toggleSliceBar: true,
   },
   reducers: {
     addToggle: (state) => {
@@ -15,5 +15,5 @@ const navigationSlice = createSlice({
   },
 });
 
-export const { addToggle, closeMenu } = navigationSlice.actions;        
+export const { addToggle, closeMenu } = navigationSlice.actions;
 export default navigationSlice.reducer;
