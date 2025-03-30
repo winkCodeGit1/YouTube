@@ -74,3 +74,6 @@ const REACT_APP_YOUTUBE_KEY = "AIzaSyBsSugrmqOwOHz1kowLyUz3UqY3p4TD-jE";
 export const Youtube_API_URL =
   "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=" +
   REACT_APP_YOUTUBE_KEY;
+
+export const YOUTUBE_SEARCH_API =
+  "http://suggestqueries.google.com/complete/search?&ds=yt&client=firefox&q=";
