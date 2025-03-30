@@ -1,5 +1,5 @@
 import React from "react";
-import VideoCard from "./VideoCard";
+import VideoCard, { AddVideoCard } from "./VideoCard";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -9,6 +9,7 @@ const VideoContainer = () => {
 
   return (
     <div className="flex flex-wrap justify-center">
+      {videoInfo[0] && <AddVideoCard info={videoInfo[0]} />}
       {videoInfo?.map((video) => (
         <Link key={video.id} to={"/watch?v=" + video?.id}>
           <VideoCard key={video.id} info={video} />

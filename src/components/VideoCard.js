@@ -24,3 +24,13 @@ const VideoCard = ({ info }) => {
 };
 
 export default VideoCard;
+
+//This is a higher order component - This is a component which takes another component as an argument and returns a new component with additional functionality,props,logic and behaviour.
+
+export const AddVideoCard = ({ info }) => {
+  return (
+    <div className="border border-red-600 rounded-lg p-2 ">
+      <VideoCard info={info} />
+    </div>
+  );
+};
