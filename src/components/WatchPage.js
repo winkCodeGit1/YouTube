@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { closeMenu } from "../utils/navigationSlice";
 import { useDispatch } from "react-redux";
 import RecommendedVideos from "./RecommendedVideos";
+import CommentSection from "./CommentSection";
 
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
@@ -14,7 +15,7 @@ const WatchPage = () => {
   return (
     <div className="flex flex-col lg:flex-row p-4">
       {/* Video Player Section */}
-      <div className="flex-1 lg:mr-4">
+      <div className="flex-1 flex-col lg:mr-4">
         <iframe
           className="w-full aspect-video"
           src={`https://www.youtube.com/embed/${searchParams.get(
@@ -26,6 +27,8 @@ const WatchPage = () => {
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
         ></iframe>
+
+        <CommentSection />
       </div>
 
       {/* Recommended Videos Section */}

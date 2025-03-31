@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToggle } from "../utils/navigationSlice";
 import { Search } from "lucide-react";
 import { addCache } from "../utils/searchSlice";
-import { YOUTUBE_SEARCH_API } from "../utils/constants";
+import { REACT_APP_YOUTUBE_KEY } from "../utils/constants";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const Header = () => {
   const cache = useSelector((store) => store.searchSlice);
   ///Debouncing mechanism
   useEffect(() => {
-    console.log(cache[searchText], "-----cache");
+    // console.log(cache[searchText], "-----cache");
 
     //caching mechanism
     const suggest = setTimeout(() => {
@@ -29,18 +29,39 @@ const Header = () => {
   }, [searchText]);
 
   const getSuggestionResult = async () => {
-    const data = await fetch(YOUTUBE_SEARCH_API + searchText);
+    // const data = await fetch(YOUTUBE_SEARCH_API + searchText);
+    const data = await fetch(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchText}&type=video&maxResults=10&key=${REACT_APP_YOUTUBE_KEY}`
+    );
     const json_data = await data.json();
-    console.log(json_data[1], "-----jsondata suggeston");
-    setSearchResults(json_data[1]);
+    // console.log(json_data, "-----jsondata suggeston");
+
+    const snippetTitle = Object.entries(json_data.items).map(([key, value]) => {
+      return value.snippet.title;
+    });
+
+    // console.log(snippetTitle, "----snippettitle");
+
+    setSearchResults(snippetTitle);
 
     //update cache
-    dispatch(addCache({ [searchText]: json_data[1] }));
+    dispatch(addCache({ [searchText]: snippetTitle }));
   };
 
   const handleToggleSideBar = () => {
     dispatch(addToggle());
   };
+
+  const handleSearchRender = async (text) => {
+    alert(text);
+    const data = await fetch(
+      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${searchText}&key=${REACT_APP_YOUTUBE_KEY}`
+    );
+
+    const json_data = await data.json();
+    console.log(json_data, "-----searchData ytb");
+  };
+
   return (
     <div className="grid grid-flow-col shadow-lg p-2">
       <div className="col-span-1 flex px-4">
@@ -85,14 +106,17 @@ const Header = () => {
           />
         </button>
         {showSearchResults && (
-          <ul className="absolute top-[8%] bg-white-200 w-[60%] mt-2 border border-gray-300 rounded-lg shadow-lg">
-            {searchResults.map((text) => (
+          <ul className="absolute top-[10%] bg-white-200 w-[55%] mt-2   rounded-lg shadow-lg">
+            {searchResults?.map((text) => (
               <li
-                className="flex items-center justify-content px-5 py-2 border border-b-gray-300 border  bg-white hover:bg-gray-300 z-30 relative cursor-pointer space-x-4"
+                className="flex items-center justify-content px-5 py-2 border-b-1  border-b-gray-300 bg-white hover:bg-gray-300 z-30 relative cursor-pointer space-x-4"
                 key={text}
+                onClick={() => handleSearchRender(text)}
               >
                 <Search size={20} />
-                <span className="ml-1">{text}</span>
+                <span className="ml-1 truncate overflow-hidden whitespace-nowrap">
+                  {text}
+                </span>
               </li>
             ))}
           </ul>
