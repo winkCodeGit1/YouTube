@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToggle } from "../utils/navigationSlice";
 import { Search } from "lucide-react";
 import { addCache } from "../utils/searchSlice";
-import { REACT_APP_YOUTUBE_KEY } from "../utils/constants";
+import { REACT_APP_YOUTUBE_KEY, YOUTUBE_SEARCH_API } from "../utils/constants";
+import SuggestionComponent from "./SuggestionComponent";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Header = () => {
   ///Debouncing mechanism
   useEffect(() => {
     // console.log(cache[searchText], "-----cache");
+    // console.log(searchText, "----searchText");
 
     //caching mechanism
     const suggest = setTimeout(() => {
@@ -29,37 +31,28 @@ const Header = () => {
   }, [searchText]);
 
   const getSuggestionResult = async () => {
-    // const data = await fetch(YOUTUBE_SEARCH_API + searchText);
-    const data = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchText}&type=video&maxResults=10&key=${REACT_APP_YOUTUBE_KEY}`
-    );
+    const data = await fetch(YOUTUBE_SEARCH_API + searchText);
+    // const data = await fetch(
+    //   `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchText}&type=video&maxResults=10&key=${REACT_APP_YOUTUBE_KEY}`
+    // );
     const json_data = await data.json();
-    // console.log(json_data, "-----jsondata suggeston");
+    console.log(json_data, "-----jsondata suggeston");
 
-    const snippetTitle = Object.entries(json_data.items).map(([key, value]) => {
-      return value.snippet.title;
-    });
+    // const snippetTitle = Object.entries(json_data.items).map(([key, value]) => {
+    //   return value.snippet.title;
+    // });
 
     // console.log(snippetTitle, "----snippettitle");
 
-    setSearchResults(snippetTitle);
+    setSearchResults(json_data[1]);
 
     //update cache
-    dispatch(addCache({ [searchText]: snippetTitle }));
+    // dispatch(addCache({ [searchText]: snippetTitle }));
+    dispatch(addCache({ [searchText]: json_data[1] }));
   };
 
   const handleToggleSideBar = () => {
     dispatch(addToggle());
-  };
-
-  const handleSearchRender = async (text) => {
-    alert(text);
-    const data = await fetch(
-      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${searchText}&key=${REACT_APP_YOUTUBE_KEY}`
-    );
-
-    const json_data = await data.json();
-    console.log(json_data, "-----searchData ytb");
   };
 
   return (
@@ -89,11 +82,11 @@ const Header = () => {
           placeholder="Search"
           onChange={(e) => setSearchText(e.target.value)}
           onFocus={() => setShowSearchResults(true)}
-          onBlur={() => setShowSearchResults(false)}
+          onBlur={() => setTimeout(() => setShowSearchResults(false), 2000)}
         />
         {searchText && (
           <button
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            className="absolute  top-[1%] transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
             onClick={() => setSearchText("")}
           >
             ✕
@@ -106,20 +99,10 @@ const Header = () => {
           />
         </button>
         {showSearchResults && (
-          <ul className="absolute top-[10%] bg-white-200 w-[55%] mt-2   rounded-lg shadow-lg">
-            {searchResults?.map((text) => (
-              <li
-                className="flex items-center justify-content px-5 py-2 border-b-1  border-b-gray-300 bg-white hover:bg-gray-300 z-30 relative cursor-pointer space-x-4"
-                key={text}
-                onClick={() => handleSearchRender(text)}
-              >
-                <Search size={20} />
-                <span className="ml-1 truncate overflow-hidden whitespace-nowrap">
-                  {text}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <SuggestionComponent
+            searchText={searchText}
+            searchResults={searchResults}
+          />
         )}
       </div>
       <div className="col-span-1 flex justify-center items-center">
