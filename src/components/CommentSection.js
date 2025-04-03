@@ -7,7 +7,7 @@ const CommentSectHead = ({ commentData }) => {
   const [showReplies, setShowReplies] = useState(false);
   return (
     <>
-      <div className="flex flex-row space-x-1.5 items-center justify-center">
+      <div className="flex flex-row space-x-1.5 items-center ">
         <img
           className="w-10 h-10 rounded-full object-cover "
           alt={commentData.username}
@@ -45,7 +45,7 @@ const CommentSection = () => {
   return (
     <>
       <h2 className="text-xl ">Comments:</h2>
-      <div className="w-[100%] flex flex-col mt-4  px-4 ">
+      <div className="w-[100%] flex flex-col mt-4  px-2 ">
         {commentData.map((commentDataList, index) => (
           <CommentSectHead key={index} commentData={commentDataList} />
         ))}
