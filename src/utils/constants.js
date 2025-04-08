@@ -79,3 +79,5 @@ export const YOUTUBE_SEARCH_API =
   "http://suggestqueries.google.com/complete/search?&ds=yt&client=firefox&q=";
 
 // export const YOUTUBE_VIDEO_API_2 ="https://www.googleapis.com/youtube/v3/search?part=snippet&q="
+
+export const videos_offset = 10;

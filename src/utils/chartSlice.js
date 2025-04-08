@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { videos_offset } from "./constants";
 
 const chartSlice = createSlice({
   name: "chartSlice",
@@ -8,7 +9,7 @@ const chartSlice = createSlice({
   reducers: {
     addMessage: (state, action) => {
       console.log(action.payload, "-----slice chart");
-      state.message.splice(10, 1);
+      state.message.splice(videos_offset, 1);
       state.message.unshift(action.payload);
     },
   },

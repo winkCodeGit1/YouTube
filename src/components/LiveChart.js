@@ -33,7 +33,10 @@ const LiveChart = () => {
     <div>
       <h2 className="text-xl">Live Chart</h2>
       <div className="flex flex-col">
-        <div className="w-full border bg-gray-200 h-96 mt-4 rounded-lg shadow-lg p-4 overflow-y-scroll no-scrollbar flex-col-reverse">
+        <div
+          className="w-full border border-gray-400 
+         bg-white-200 h-96 mt-4 rounded-lg shadow-lg p-4 overflow-y-scroll no-scrollbar flex-col-reverse"
+        >
           {message.map((msg, index) => (
             <ChatMessage key={index} msg={msg} />
           ))}
